@@ -33,7 +33,7 @@ basketball_analytics/
 
 To run this project locally, clone the repository and install the dependencies listed in the requirements.txt file:
 
-git clone [https://github.com/SportsFirstAI/basketball_analytics.git](https://github.com/SportsFirstAI/basketball_analytics.git)
+git clone https://github.com/SportsFirstAI/basketball_analytics.git
 cd basketball_analytics
 pip install -r requirements.txt
 
