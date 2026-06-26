@@ -1,0 +1,52 @@
+# ============================================================
+# Basketball Detection Classes
+# ============================================================
+
+dataset:
+  name: basketball-player-detection
+  version: 1
+  format: coco
+
+classes:
+
+  0:
+    name: player
+    color: [0,255,0]
+
+  1:
+    name: referee
+    color: [255,255,0]
+
+  2:
+    name: basketball
+    color: [255,128,0]
+
+  3:
+    name: rim
+    color: [255,0,0]
+
+  4:
+    name: jersey_number
+    color: [255,0,255]
+
+  5:
+    name: ball_in_basket
+    color: [0,255,255]
+
+  6:
+    name: player_in_possession
+    color: [150,255,0]
+
+  7:
+    name: player_jumpshot
+    color: [255,150,0]
+
+  8:
+    name: player_layup_dunk
+    color: [255,100,100]
+
+  9:
+    name: player_shot_block
+    color: [100,100,255]
+
+num_classes: 10

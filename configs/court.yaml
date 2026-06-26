@@ -1,0 +1,23 @@
+court:
+
+  league: NBA
+
+  length_ft: 94
+
+  width_ft: 50
+
+  center_circle_radius_ft: 6
+
+  basket_height_ft: 10
+
+image:
+
+  width: 940
+
+  height: 500
+
+projection:
+
+  origin: top_left
+
+  units: feet

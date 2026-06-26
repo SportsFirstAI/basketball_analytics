@@ -1,0 +1,17 @@
+sam2:
+
+  model: sam2.1_hiera_large.pt
+
+  device: cuda
+
+tracking:
+
+  min_mask_area: 500
+
+  confidence_threshold: 0.35
+
+  iou_threshold: 0.5
+
+  max_missing_frames: 30
+
+  mask_cleanup: true

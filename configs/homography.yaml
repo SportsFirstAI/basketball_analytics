@@ -1,0 +1,13 @@
+homography:
+
+  confidence_threshold: 0.5
+
+  minimum_keypoints: 4
+
+  ransac_threshold: 5.0
+
+output:
+
+  width: 940
+
+  height: 500
