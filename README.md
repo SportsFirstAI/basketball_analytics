@@ -1,61 +1,224 @@
-🏀 Basketball AI Analytics Pipeline
+# 🏀 Basketball AI Analytics Pipeline
 
-An open-source, modular computer vision pipeline designed to track players, classify teams without supervision, read jersey numbers, and generate spatial 2D court analytics from broadcast basketball footage.
+An **open-source, modular computer vision pipeline** designed to track players, classify teams without supervision, recognize jersey numbers, and generate **2D spatial basketball analytics** from broadcast footage.
 
-🚀 Architecture Overview
+The project is built with a modular architecture so that individual components can be improved independently and easily adapted to other sports.
 
-This pipeline is broken down into modular steps to allow for easy testing and future adaptation to other sports:
+---
 
-Object Detection: Locates players, ball, and rim using RF-DETR.
+# 🚀 Features
 
-Player Tracking: Maintains pixel-level tracking across frames using SAM 2.
+- 🎯 Player, ball, and rim detection using **RF-DETR**
+- 🏃 Multi-object tracking using **SAM 2**
+- 👕 Unsupervised team classification using **SigLIP + UMAP + K-Means**
+- 🗺️ Court homography projection for 2D analytics
+- 📊 Trajectory smoothing and basketball event analytics
+- 🔧 Modular architecture for research and future expansion
 
-Team Clustering: Unsupervised team sorting using SigLIP, UMAP, and K-Means.
+---
 
-Court Mapping: Homography matrix projection onto a 2D map using YOLO 11 keypoint detection.
+# 🏗️ Pipeline Architecture
 
-Event Analytics: Trajectory smoothing (MAD) and shot-event detection.
+```
+Broadcast Video
+       │
+       ▼
+RF-DETR Object Detection
+       │
+       ▼
+SAM 2 Player Tracking
+       │
+       ▼
+Player Crop Extraction
+       │
+       ▼
+SigLIP Feature Embeddings
+       │
+       ▼
+UMAP Dimensionality Reduction
+       │
+       ▼
+K-Means Team Clustering
+       │
+       ▼
+YOLO11 Court Keypoint Detection
+       │
+       ▼
+Homography Transformation
+       │
+       ▼
+2D Court Mapping
+       │
+       ▼
+Trajectory Smoothing + Event Analytics
+```
 
-📁 Repository Structure
+---
 
+# 📁 Repository Structure
+
+```text
 basketball_analytics/
-├── configs/                 # Sport-specific rules and dimensions (court.yaml, etc.)
-├── data/                    # Ignored: Local data storage (raw clips, processed frames)
-├── models/                  # Ignored: Local storage for model weights (.pth, .pt)
-├── notebooks/               # Jupyter notebooks for sandbox testing and experiments
-├── src/                     # Core Python modules (detection, tracking, homography)
-├── .gitignore               # Keeps heavy files out of the repository
-├── README.md                # Project documentation and Dev Log
-└── requirements.txt         # Python dependencies
+│
+├── configs/                 # Sport-specific configurations (court dimensions, rules)
+├── data/                    # Local datasets (ignored by Git)
+├── models/                  # Model weights (.pt, .pth) (ignored by Git)
+├── notebooks/               # Jupyter notebooks for experimentation
+├── src/                     # Core Python modules
+│   ├── detection/
+│   ├── tracking/
+│   ├── clustering/
+│   ├── homography/
+│   └── analytics/
+│
+├── .gitignore
+├── README.md
+└── requirements.txt
+```
 
+---
 
-🛠️ Installation
+# 🛠️ Installation
 
-To run this project locally, clone the repository and install the dependencies listed in the requirements.txt file:
+Clone the repository:
 
-git clone [https://github.com/SportsFirstAI/basketball_analytics.git](https://github.com/SportsFirstAI/basketball_analytics.git)
+```bash
+git clone https://github.com/SportsFirstAI/basketball_analytics.git
+```
+
+Move into the project directory:
+
+```bash
 cd basketball_analytics
+```
+
+Install the dependencies:
+
+```bash
 pip install -r requirements.txt
+```
 
+---
 
-📅 Project Status & Dev Log
+# 🧠 Tech Stack
 
-This section tracks the overall progress, milestones, and current development focus for the pipeline.
+| Component | Model / Library |
+|------------|-----------------|
+| Object Detection | RF-DETR |
+| Tracking | SAM 2 |
+| Image Embeddings | SigLIP |
+| Dimensionality Reduction | UMAP |
+| Team Classification | K-Means |
+| Court Keypoints | YOLO11 Pose |
+| Visualization | OpenCV, Supervision |
+| Analytics | NumPy, Pandas |
 
-Phase 1: Project Setup & Baseline Detection (Completed)
+---
 
-Initialized the GitHub repository and established the modular folder architecture (src/, configs/, notebooks/).
+# 📅 Development Roadmap
 
-Created .gitignore to protect the repo from heavy video/weight files and defined requirements.txt.
+## ✅ Phase 1 — Project Setup & Baseline Detection *(Completed)*
 
-Acquired baseline test footage (stephcurryvideo.mp4).
+- Repository initialized with modular architecture
+- Created project folders (`src`, `configs`, `notebooks`, etc.)
+- Added `.gitignore` and `requirements.txt`
+- Collected baseline test footage (`stephcurryvideo.mp4`)
+- Fine-tuned **RF-DETR Small** for **20 epochs** on Roboflow
+- Successfully detected:
+  - Players
+  - Basketball
+  - Rim
+- Developed the initial inference notebook:
+  - `01_player_detection.ipynb`
+- Generated annotated MP4 output using **Supervision**
 
-Successfully fine-tuned the RFDETRSmall model in Roboflow for 20 epochs to detect players, ball, and rim.
+---
 
-Wrote the first inference script (PlayerDetection.ipynb) using supervision to draw bounding boxes and successfully exported an annotated MP4.
+## 🚧 Phase 2 — Tracking & Team Classification *(In Progress)*
 
-Phase 2: Tracking & Clustering Initialization (In Progress)
+### 👕 Team Clustering
 
-Team Clustering Development: Writing the 02_team_clustering.ipynb notebook. Implementing the math to extract player crops, pass them through SigLIP, reduce dimensionality with UMAP, and cluster them into two distinct teams using K-Means.
+Current work includes:
 
-SAM 2 Integration: Working on the SAM 2 tracking logic to pass the RF-DETR bounding boxes from Phase 1 into SAM 2 as prompts to generate stable, pixel-level tracking masks.
+- Extracting player image crops
+- Computing SigLIP feature embeddings
+- Applying UMAP for dimensionality reduction
+- Clustering players into two teams using K-Means
+
+Notebook:
+
+```
+02_team_clustering.ipynb
+```
+
+---
+
+### 🏃 SAM 2 Tracking
+
+Current work includes:
+
+- Feeding RF-DETR bounding boxes into SAM 2
+- Creating stable segmentation masks
+- Maintaining player identities across frames
+- Improving temporal consistency
+
+---
+
+## 🔜 Upcoming Phases
+
+### Phase 3
+
+- Jersey Number Recognition (OCR)
+
+### Phase 4
+
+- Court Homography Mapping
+- 2D Court Visualization
+
+### Phase 5
+
+- Ball Trajectory Estimation
+- Shot Detection
+- Possession Analytics
+- Heatmaps
+- Pass Networks
+
+---
+
+# 🎯 Current Status
+
+| Module | Status |
+|---------|--------|
+| Repository Setup | ✅ Completed |
+| RF-DETR Detection | ✅ Completed |
+| Video Inference | ✅ Completed |
+| SAM 2 Tracking | 🚧 In Progress |
+| Team Clustering | 🚧 In Progress |
+| Court Homography | ⏳ Planned |
+| Jersey OCR | ⏳ Planned |
+| Event Analytics | ⏳ Planned |
+
+---
+
+# 🤝 Contributing
+
+Contributions, ideas, and improvements are welcome!
+
+If you'd like to contribute:
+
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Open a Pull Request
+
+---
+
+# 📄 License
+
+This project is released under the **MIT License**.
+
+---
+
+# ⭐ Support
+
+If you find this project useful, consider giving it a ⭐ on GitHub to support future development.
