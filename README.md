@@ -221,4 +221,8 @@ This project is released under the **MIT License**.
 
 # ⭐ Support
 
+<<<<<<< HEAD
 If you find this project useful, consider giving it a ⭐ on GitHub to support future development.
+=======
+If you find this project useful, consider giving it a ⭐ on GitHub to support future development.
+>>>>>>> d248822a91371b59d48c90dc9ece2f26a59a1575
